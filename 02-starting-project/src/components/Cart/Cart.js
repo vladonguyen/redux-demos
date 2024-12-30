@@ -7,18 +7,24 @@ import { useSelector } from 'react-redux';
 
 
 const Cart = (props) => {
-const cartIsVisible = useSelector(state=> state.ui.cartIsVisible);
+  const cartIsVisible = useSelector(state => state.ui.cartIsVisible);
+  const quantity = useSelector(state => state.cart.quantity);
+  const price = useSelector(state => state.cart.price);
+  const total = quantity * price;
 
   return (
     <Fragment>
-   {cartIsVisible && <Card className={classes.cart}>
-      <h2>Your Shopping Cart</h2>
-      <ul>
-        <CartItem
-          item={{ title: 'Test Item', quantity: 3, total: 18, price: 6 }}
-        />
-      </ul>
-    </Card>}
+      {cartIsVisible && <Card className={classes.cart}>
+        <h2>Your Shopping Cart</h2>
+        {quantity > 0 ? (<ul>
+          <CartItem
+            item={{ title: 'Test Item' }}
+            quantity={quantity}
+            price={price}
+            total={total}
+          />
+        </ul>) : "No products in cart!"}
+      </Card>}
     </Fragment>
   );
 };

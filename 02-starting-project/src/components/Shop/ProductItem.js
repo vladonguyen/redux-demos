@@ -1,8 +1,21 @@
+import { cartSliceActions } from '../../store/cart-slice';
+import { uiActions } from '../../store/ui-slice';
 import Card from '../UI/Card';
 import classes from './ProductItem.module.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 const ProductItem = (props) => {
   const { title, price, description } = props;
+
+  const dispatch = useDispatch();
+  const increaseHandler = ()=>{
+    dispatch(cartSliceActions.increment())
+  };
+
+  const showProductsHandler = ()=>{
+    dispatch(uiActions.show())
+  }
 
   return (
     <li className={classes.item}>
@@ -13,7 +26,7 @@ const ProductItem = (props) => {
         </header>
         <p>{description}</p>
         <div className={classes.actions}>
-          <button>Add to Cart</button>
+          <button onClick={()=> {increaseHandler(); showProductsHandler();}}>Add to Cart</button>
         </div>
       </Card>
     </li>
